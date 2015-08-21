@@ -1,6 +1,6 @@
-[submodule "deps/nanomsg"]
-	path = deps/nanomsg
-	url = https://github.com/nanomsg/nanomsg.git
 [submodule "premake"]
 	path = premake
 	url = https://github.com/d-led/premake-meta-cpp.git
+[submodule "deps/cppnanomsg"]
+	path = deps/cppnanomsg
+	url = https://github.com/nanomsg/cppnanomsg.git
