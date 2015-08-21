@@ -1,0 +1,10 @@
+language: cpp
+
+compiler:
+  - clang
+
+script:
+  - ./build_nano.sh
+  - export LD_LIBRARY_PATH=`pwd`/nano/lib
+  - make -C Build/linux/gmake config=release_x64
+  - bin/linux/gmake/x64/Release/cppnanomsg_check

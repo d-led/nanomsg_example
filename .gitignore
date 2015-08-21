@@ -32,3 +32,4 @@ packages/
 UpgradeLog.htm
 UpgradeLog*.htm
 zmqpluginuser/libzmq.dll
+nano/
