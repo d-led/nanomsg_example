@@ -6,11 +6,6 @@ compiler:
 install:
   - ./build_nano.sh
 
-cache:
-  directories:
-    - tmp
-    - nano
-
 script:
   - export LD_LIBRARY_PATH=`pwd`/nano/lib
   - make -C Build/linux/gmake config=release_x64
