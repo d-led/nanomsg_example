@@ -1,5 +1,9 @@
 version: 1.0.{build}
 clone_depth: 2
+install:
+  - gem update --system
+  - gem install rufus-scheduler
 build_script:
   - git submodule update --init --recursive
   - MSBuild .\Build\windows\vs2013\nanomsg_example.sln
+  - ruby demo.rb
