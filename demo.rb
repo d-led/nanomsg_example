@@ -14,7 +14,7 @@ end
 
 def start_demo(what,para)
 	absolute_path_to_executable = 	(
-										(Dir.glob("bin/**/"+ what +".*")) + 
+										(Dir.glob("bin/**/"+ what +".exe")) + 
 										(Dir.glob("bin/**/"+ what      ))
 									).max_by {|f| File.mtime(f)}
 
