@@ -12,18 +12,26 @@ endif
 
 ifeq ($(config),debug_x32)
   cppnanomsg_check_config = debug_x32
+  worker_config = debug_x32
+  server_config = debug_x32
 endif
 ifeq ($(config),debug_x64)
   cppnanomsg_check_config = debug_x64
+  worker_config = debug_x64
+  server_config = debug_x64
 endif
 ifeq ($(config),release_x32)
   cppnanomsg_check_config = release_x32
+  worker_config = release_x32
+  server_config = release_x32
 endif
 ifeq ($(config),release_x64)
   cppnanomsg_check_config = release_x64
+  worker_config = release_x64
+  server_config = release_x64
 endif
 
-PROJECTS := cppnanomsg_check
+PROJECTS := cppnanomsg_check worker server
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -35,8 +43,22 @@ ifneq (,$(cppnanomsg_check_config))
 	@${MAKE} --no-print-directory -C . -f cppnanomsg_check.make config=$(cppnanomsg_check_config)
 endif
 
+worker:
+ifneq (,$(worker_config))
+	@echo "==== Building worker ($(worker_config)) ===="
+	@${MAKE} --no-print-directory -C . -f worker.make config=$(worker_config)
+endif
+
+server:
+ifneq (,$(server_config))
+	@echo "==== Building server ($(server_config)) ===="
+	@${MAKE} --no-print-directory -C . -f server.make config=$(server_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f cppnanomsg_check.make clean
+	@${MAKE} --no-print-directory -C . -f worker.make clean
+	@${MAKE} --no-print-directory -C . -f server.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -51,5 +73,7 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   cppnanomsg_check"
+	@echo "   worker"
+	@echo "   server"
 	@echo ""
 	@echo "For more information, see http://industriousone.com/premake/quick-start"

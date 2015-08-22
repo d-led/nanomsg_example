@@ -13,13 +13,13 @@ endif
 ifeq ($(config),debug_x32)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x32/Debug
-  TARGET = $(TARGETDIR)/cppnanomsg_check
-  OBJDIR = ../../../obj/linux/gmake/x32/Debug/cppnanomsg_check
+  TARGET = $(TARGETDIR)/server
+  OBJDIR = ../../../obj/linux/gmake/x32/Debug/server
   DEFINES += -D_DEBUG
   INCLUDES += -I../../../nano/include -I../../../deps/cppnanomsg -I../../../deps/sole
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m32
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m32 -std=c++11
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS += -lnanomsg
@@ -40,13 +40,13 @@ endif
 ifeq ($(config),debug_x64)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x64/Debug
-  TARGET = $(TARGETDIR)/cppnanomsg_check
-  OBJDIR = ../../../obj/linux/gmake/x64/Debug/cppnanomsg_check
+  TARGET = $(TARGETDIR)/server
+  OBJDIR = ../../../obj/linux/gmake/x64/Debug/server
   DEFINES += -D_DEBUG
   INCLUDES += -I../../../nano/include -I../../../deps/cppnanomsg -I../../../deps/sole
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m64
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m64 -std=c++11
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS += -lnanomsg
@@ -67,13 +67,13 @@ endif
 ifeq ($(config),release_x32)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x32/Release
-  TARGET = $(TARGETDIR)/cppnanomsg_check
-  OBJDIR = ../../../obj/linux/gmake/x32/Release/cppnanomsg_check
+  TARGET = $(TARGETDIR)/server
+  OBJDIR = ../../../obj/linux/gmake/x32/Release/server
   DEFINES +=
   INCLUDES += -I../../../nano/include -I../../../deps/cppnanomsg -I../../../deps/sole
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -O2
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -O2 -std=c++11
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS += -lnanomsg
@@ -94,13 +94,13 @@ endif
 ifeq ($(config),release_x64)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x64/Release
-  TARGET = $(TARGETDIR)/cppnanomsg_check
-  OBJDIR = ../../../obj/linux/gmake/x64/Release/cppnanomsg_check
+  TARGET = $(TARGETDIR)/server
+  OBJDIR = ../../../obj/linux/gmake/x64/Release/server
   DEFINES +=
   INCLUDES += -I../../../nano/include -I../../../deps/cppnanomsg -I../../../deps/sole
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++11
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
   LIBS += -lnanomsg
@@ -119,7 +119,7 @@ all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/binding.o \
+	$(OBJDIR)/server.o \
 
 RESOURCES := \
 
@@ -134,7 +134,7 @@ ifeq (/bin,$(findstring /bin,$(SHELL)))
 endif
 
 $(TARGET): $(GCH) $(OBJECTS) $(LDDEPS) $(RESOURCES) ${CUSTOMFILES}
-	@echo Linking cppnanomsg_check
+	@echo Linking server
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -155,7 +155,7 @@ else
 endif
 
 clean:
-	@echo Cleaning cppnanomsg_check
+	@echo Cleaning server
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -177,7 +177,7 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 endif
 
-$(OBJDIR)/binding.o: ../../../deps/cppnanomsg/binding.cpp
+$(OBJDIR)/server.o: ../../../src/server/server.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

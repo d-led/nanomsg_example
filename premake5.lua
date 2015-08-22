@@ -35,8 +35,8 @@ links { 'nanomsg' }
 
 make_console_app('worker',{ 'src/worker/worker.cpp', 'deps/sole/sole.cpp' })
 links { 'nanomsg' }
-use_cpp11()
+use_standard 'c++11'
 
 make_console_app('server',{ 'src/server/server.cpp' })
 links { 'nanomsg' }
-use_cpp11()
+use_standard 'c++11'
