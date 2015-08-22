@@ -6,13 +6,24 @@
 #include <chrono>
 #include <sole.hpp>
 #include <string>
+#include <iostream>
 
-int main() {
+int main(int argc, char* argv[]) {
     bool running = true;
     nn::socket s1(AF_SP, NN_PUB);
-    s1.bind("tcp://*:7777");
+
     auto uuid = sole::uuid0();
     auto uuid_string = uuid.base62();
+
+    if (argc == 1) {
+        std::cout << uuid_string << " (worker) -> " << "tcp://*:7777" << std::endl;
+        s1.bind("tcp://*:7777");
+    }
+    else {
+        std::cout << uuid_string << " (worker) -> " << argv[1] << std::endl;
+        s1.bind(argv[1]);
+    }
+
     int i = 0;
     while (running) {
         std::string message(uuid_string);
