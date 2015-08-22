@@ -4,3 +4,6 @@
 [submodule "deps/cppnanomsg"]
 	path = deps/cppnanomsg
 	url = https://github.com/nanomsg/cppnanomsg.git
+[submodule "deps/sole"]
+	path = deps/sole
+	url = https://github.com/r-lyeh/sole.git

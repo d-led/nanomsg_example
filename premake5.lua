@@ -25,5 +25,18 @@ filter {}
 	includedirs { './nano/include' }
 	libdirs { './nano/lib' }
 
+includedirs {
+	'deps/cppnanomsg',
+	'deps/sole'
+}
+
 make_console_app('cppnanomsg_check',{ 'deps/cppnanomsg/binding.cpp' })
 links { 'nanomsg' }
+
+make_console_app('worker',{ 'src/worker/worker.cpp', 'deps/sole/sole.cpp' })
+links { 'nanomsg' }
+use_cpp11()
+
+make_console_app('server',{ 'src/server/server.cpp' })
+links { 'nanomsg' }
+use_cpp11()
