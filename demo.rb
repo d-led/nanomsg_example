@@ -40,4 +40,9 @@ scheduler.in '10s' do
   exit
 end
 
+scheduler.in '30s' do
+  puts 'strange'
+  exit
+end
+
 scheduler.join
