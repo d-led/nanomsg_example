@@ -2,7 +2,7 @@ language: cpp
 
 compiler:
   - clang
-  
+
 install:
   - ./build_nano.sh
 
@@ -10,3 +10,4 @@ script:
   - export LD_LIBRARY_PATH=`pwd`/nano/lib
   - make -C Build/linux/gmake config=release_x64
   - bin/linux/gmake/x64/Release/cppnanomsg_check
+  - LD_LIBRARY_PATH=`pwd`/nano/lib ruby demo.rb
