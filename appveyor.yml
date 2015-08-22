@@ -6,5 +6,6 @@ install:
   - gem install rufus-scheduler --no-document
 build_script:
   - git submodule update --init --recursive
+  - .\premake\premake5 vs2013
   - MSBuild .\Build\windows\vs2013\nanomsg_example.sln
   - ruby demo.rb
