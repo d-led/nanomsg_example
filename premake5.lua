@@ -33,10 +33,14 @@ includedirs {
 make_console_app('cppnanomsg_check',{ 'deps/cppnanomsg/binding.cpp' })
 links { 'nanomsg' }
 
-make_console_app('worker',{ 'src/worker/worker.cpp', 'deps/sole/sole.cpp' })
+make_console_app('worker',{ 'src/worker/worker.cpp', 'deps/sole/sole.cpp', 'src/common/*.h' })
 links { 'nanomsg' }
 use_standard 'c++11'
 
 make_console_app('server',{ 'src/server/server.cpp', 'deps/sole/sole.cpp' })
+links { 'nanomsg' }
+use_standard 'c++11'
+
+make_console_app('stop_all',{ 'src/common/stop_all.cpp' })
 links { 'nanomsg' }
 use_standard 'c++11'

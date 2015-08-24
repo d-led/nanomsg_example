@@ -10,9 +10,20 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{E5D74254-D18F-84A1-3A97-5DFD266E1F92}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\worker">
       <UniqueIdentifier>{96B8EC82-8270-2ED0-EB77-072CD74EC9C0}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\common\cancellation_token.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\common\nanomsg_cancellation_token.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\deps\sole\sole.cpp">

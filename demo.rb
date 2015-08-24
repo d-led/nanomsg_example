@@ -28,6 +28,7 @@ end
 	['3s','worker', 'tcp://*:7778'],
 	['3s','server', 'tcp://localhost:7777'],
 	['4s','worker', 'tcp://*:7779'],
+	['7s','stop_all'],
 ].each do |task|
 	scheduler.in task[0] do
 		puts "starting #{task[1]}"
@@ -35,13 +36,8 @@ end
 	end
 end
 
-scheduler.in '10s' do
+scheduler.in '11s' do
   puts 'bye'
-  exit
-end
-
-scheduler.in '30s' do
-  puts 'strange'
   exit
 end
 
