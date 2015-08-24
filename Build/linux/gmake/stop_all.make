@@ -13,8 +13,8 @@ endif
 ifeq ($(config),debug_x32)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x32/Debug
-  TARGET = $(TARGETDIR)/worker
-  OBJDIR = ../../../obj/linux/gmake/x32/Debug/worker
+  TARGET = $(TARGETDIR)/stop_all
+  OBJDIR = ../../../obj/linux/gmake/x32/Debug/stop_all
   DEFINES += -D_DEBUG
   INCLUDES += -I../../../nano/include -I../../../deps/cppnanomsg -I../../../deps/sole
   FORCE_INCLUDE +=
@@ -22,7 +22,7 @@ ifeq ($(config),debug_x32)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m32 -std=c++11
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lnanomsg -lpthread
+  LIBS += -lnanomsg
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -L../../../nano/lib -m32
   LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -40,8 +40,8 @@ endif
 ifeq ($(config),debug_x64)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x64/Debug
-  TARGET = $(TARGETDIR)/worker
-  OBJDIR = ../../../obj/linux/gmake/x64/Debug/worker
+  TARGET = $(TARGETDIR)/stop_all
+  OBJDIR = ../../../obj/linux/gmake/x64/Debug/stop_all
   DEFINES += -D_DEBUG
   INCLUDES += -I../../../nano/include -I../../../deps/cppnanomsg -I../../../deps/sole
   FORCE_INCLUDE +=
@@ -49,7 +49,7 @@ ifeq ($(config),debug_x64)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g -m64 -std=c++11
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lnanomsg -lpthread
+  LIBS += -lnanomsg
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -L../../../nano/lib -m64
   LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -67,8 +67,8 @@ endif
 ifeq ($(config),release_x32)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x32/Release
-  TARGET = $(TARGETDIR)/worker
-  OBJDIR = ../../../obj/linux/gmake/x32/Release/worker
+  TARGET = $(TARGETDIR)/stop_all
+  OBJDIR = ../../../obj/linux/gmake/x32/Release/stop_all
   DEFINES +=
   INCLUDES += -I../../../nano/include -I../../../deps/cppnanomsg -I../../../deps/sole
   FORCE_INCLUDE +=
@@ -76,7 +76,7 @@ ifeq ($(config),release_x32)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -O2 -std=c++11
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lnanomsg -lpthread
+  LIBS += -lnanomsg
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -L../../../nano/lib -s -m32
   LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -94,8 +94,8 @@ endif
 ifeq ($(config),release_x64)
   RESCOMP = windres
   TARGETDIR = ../../../bin/linux/gmake/x64/Release
-  TARGET = $(TARGETDIR)/worker
-  OBJDIR = ../../../obj/linux/gmake/x64/Release/worker
+  TARGET = $(TARGETDIR)/stop_all
+  OBJDIR = ../../../obj/linux/gmake/x64/Release/stop_all
   DEFINES +=
   INCLUDES += -I../../../nano/include -I../../../deps/cppnanomsg -I../../../deps/sole
   FORCE_INCLUDE +=
@@ -103,7 +103,7 @@ ifeq ($(config),release_x64)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++11
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS)
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lnanomsg -lpthread
+  LIBS += -lnanomsg
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -L../../../nano/lib -s -m64
   LINKCMD = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -119,8 +119,7 @@ all: $(TARGETDIR) $(OBJDIR) prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/sole.o \
-	$(OBJDIR)/worker.o \
+	$(OBJDIR)/stop_all.o \
 
 RESOURCES := \
 
@@ -135,7 +134,7 @@ ifeq (/bin,$(findstring /bin,$(SHELL)))
 endif
 
 $(TARGET): $(GCH) $(OBJECTS) $(LDDEPS) $(RESOURCES) ${CUSTOMFILES}
-	@echo Linking worker
+	@echo Linking stop_all
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -156,7 +155,7 @@ else
 endif
 
 clean:
-	@echo Cleaning worker
+	@echo Cleaning stop_all
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -178,10 +177,7 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
 endif
 
-$(OBJDIR)/sole.o: ../../../deps/sole/sole.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/worker.o: ../../../src/worker/worker.cpp
+$(OBJDIR)/stop_all.o: ../../../src/common/stop_all.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

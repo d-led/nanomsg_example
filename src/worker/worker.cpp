@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     int i = 0;
     while (!token.cancelled()) {
         std::string message(uuid_string);
-        message += " " + uuid_string + ": " + std::to_string(i++);
+        message += " " + host_name + ": " + std::to_string(i++);
         s1.send(message.c_str(), message.size() + 1, 0);
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
