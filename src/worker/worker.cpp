@@ -9,6 +9,7 @@
 #include <sole.hpp>
 #include <string>
 #include <iostream>
+#include <memory>
 
 namespace {
 
@@ -38,10 +39,10 @@ namespace {
 }
 
 int main(int argc, char* argv[]) {
-    nanomsg_cancellation_token token;
+    auto token = std::make_shared<nanomsg_cancellation_token>();
     nn::socket s1(AF_SP, NN_PUB);
 
-    std::thread([&token]{ token.wait(); }).detach();
+    token->wait_on_new_thread();
 
     auto uuid = sole::uuid0();
     auto uuid_string = uuid.base62();
@@ -57,7 +58,7 @@ int main(int argc, char* argv[]) {
     }
 
     int i = 0;
-    while (!token.cancelled()) {
+    while (!token->cancelled()) {
         std::string message(uuid_string);
         message += " " + host_name + ": " + std::to_string(i++);
         s1.send(message.c_str(), message.size() + 1, 0);

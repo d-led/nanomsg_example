@@ -7,6 +7,9 @@ class cancellation_token {
 
 public:
     cancellation_token() : cancelled_(false) {}
+    ~cancellation_token() {
+        cancelled_ = true;
+    }
 
     inline void cancel() {
         cancelled_ = true;
