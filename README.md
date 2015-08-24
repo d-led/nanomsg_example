@@ -1,3 +1,9 @@
+## nanomsg example ##
+
+== [cppnanomsg](https://github.com/nanomsg/cppnanomsg) + [sole (uuid)](https://github.com/r-lyeh/sole) + [premake](https://github.com/d-led/premake-meta-cpp)
+
+[premake5.lua](premake5.lua) `->` `premake/premake5` `->` build `->` [`ruby demo.rb`](https://travis-ci.org/d-led/nanomsg_example/jobs/77043092#L989-L1029)
+
 [![Build Status](https://travis-ci.org/d-led/nanomsg_example.svg?branch=master)](https://travis-ci.org/d-led/nanomsg_example)
 
 
