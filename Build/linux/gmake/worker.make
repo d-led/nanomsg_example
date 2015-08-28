@@ -120,6 +120,7 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/sole.o \
+	$(OBJDIR)/system_info.o \
 	$(OBJDIR)/worker.o \
 
 RESOURCES := \
@@ -179,6 +180,9 @@ $(GCH): $(PCH)
 endif
 
 $(OBJDIR)/sole.o: ../../../deps/sole/sole.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/system_info.o: ../../../src/common/system_info.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/worker.o: ../../../src/worker/worker.cpp
