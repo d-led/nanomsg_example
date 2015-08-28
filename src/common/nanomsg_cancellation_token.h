@@ -4,6 +4,7 @@
 
 #include <nn.hpp>
 #include <nanomsg/pubsub.h>
+#include <nanomsg/nn.h>
 #include <memory>
 #include <thread>
 
@@ -23,6 +24,7 @@ class nanomsg_cancellation_token : public std::enable_shared_from_this<nanomsg_c
         while (!token.cancelled()) {
             if (sub.recv(buf, sizeof(buf), 0) >= 0) {
                 token.cancel();
+                nn_term(); // would produce error or all recv
             }
         }
     }

@@ -32,9 +32,13 @@ int main(int argc, char* argv[]) {
 
     char buf[128];
 
-    while (!token->cancelled()) {
-        if (s2.recv(buf, sizeof(buf), 0) >= 0) {
-            std::cout << uuid_string << " <- " << buf << std::endl;
+    try {
+        while (!token->cancelled()) {
+            if (s2.recv(buf, sizeof(buf), 0) >= 0) {
+                std::cout << uuid_string << " <- " << buf << std::endl;
+            }
         }
+    } catch (std::exception& e) {
+        std::cout << "aborted: " << e.what() <<std::endl;
     }
 }
