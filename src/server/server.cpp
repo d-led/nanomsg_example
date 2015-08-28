@@ -39,6 +39,6 @@ int main(int argc, char* argv[]) {
             }
         }
     } catch (std::exception& e) {
-        std::cout << "aborted: " << e.what() <<std::endl;
+        std::cout << uuid_string << "aborted: " << e.what() <<std::endl;
     }
 }

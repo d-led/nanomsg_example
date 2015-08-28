@@ -5,6 +5,8 @@
 [premake5.lua](premake5.lua) `->` `premake/premake5` `->` build `->` [`ruby demo.rb`](https://travis-ci.org/d-led/nanomsg_example/jobs/77043092#L989-L1029)
 
 [![Build Status](https://travis-ci.org/d-led/nanomsg_example.svg?branch=master)](https://travis-ci.org/d-led/nanomsg_example)
+[![Build status](https://ci.appveyor.com/api/projects/status/roe73s0fn9bs68t4/branch/master?svg=true)](https://ci.appveyor.com/project/d-led/nanomsg-example/branch/master)
+
 
 
 ```
