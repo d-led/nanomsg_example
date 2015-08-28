@@ -178,9 +178,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\src\common\cancellation_token.h" />
     <ClInclude Include="..\..\..\src\common\nanomsg_cancellation_token.h" />
+    <ClInclude Include="..\..\..\src\common\system_info.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\deps\sole\sole.cpp" />
+    <ClCompile Include="..\..\..\src\common\system_info.cpp" />
     <ClCompile Include="..\..\..\src\worker\worker.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

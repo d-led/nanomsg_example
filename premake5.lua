@@ -39,7 +39,12 @@ includedirs {
 make_console_app('cppnanomsg_check',{ 'deps/cppnanomsg/binding.cpp' })
 links { 'nanomsg' }
 
-make_console_app('worker',{ 'src/worker/worker.cpp', 'deps/sole/sole.cpp', 'src/common/*.h' })
+make_console_app('worker',{
+	'src/worker/worker.cpp',
+	'deps/sole/sole.cpp',
+	'src/common/*.h',
+	'src/common/system_info.cpp',
+})
 links { 'nanomsg' }
 os_dependent_links()
 use_standard 'c++11'

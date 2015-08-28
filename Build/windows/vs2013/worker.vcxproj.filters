@@ -24,10 +24,16 @@
     <ClInclude Include="..\..\..\src\common\nanomsg_cancellation_token.h">
       <Filter>src\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\common\system_info.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\deps\sole\sole.cpp">
       <Filter>deps\sole</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\common\system_info.cpp">
+      <Filter>src\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\worker\worker.cpp">
       <Filter>src\worker</Filter>

@@ -3,6 +3,7 @@
 #include <nanomsg/pair.h>
 
 #include "../common/nanomsg_cancellation_token.h"
+#include "../common/system_info.h"
 
 #include <thread>
 #include <chrono>
@@ -11,42 +12,16 @@
 #include <iostream>
 #include <memory>
 
-namespace {
-
-// somewhat simplistic
-#ifdef _MSC_VER
-// https://msdn.microsoft.com/en-us/library/windows/desktop/ms738527(v=vs.85).aspx
-#pragma comment(lib, "Ws2_32.lib")
-#include<Winsock2.h>
-    std::string hostname() {
-        char path[128] = "";
-        WSADATA wsaData;
-        WSAStartup(MAKEWORD(2, 2), &wsaData);
-        gethostname(path, sizeof(path));
-        printf("%s", path);
-        WSACleanup();
-        return std::string(path);
-    }
-#else
-#include <unistd.h>
-// http://man7.org/linux/man-pages/man2/gethostname.2.html
-    std::string hostname() {
-        char path[128] = "";
-        gethostname(path, sizeof(path));
-        return std::string(path);
-    }
-#endif
-}
-
 int main(int argc, char* argv[]) {
     auto token = std::make_shared<nanomsg_cancellation_token>();
-    nn::socket s1(AF_SP, NN_PUB);
 
     token->wait_on_new_thread();
 
-    auto uuid = sole::uuid0();
-    auto uuid_string = uuid.base62();
+    auto uuid_string = sole::uuid0().base62();
     auto host_name = hostname();
+
+    // configure the publisher socket
+    nn::socket s1(AF_SP, NN_PUB);
 
     if (argc == 1) {
         std::cout << uuid_string << " " << host_name << " (worker) -> " << "tcp://*:7777" << std::endl;
@@ -57,12 +32,18 @@ int main(int argc, char* argv[]) {
         s1.bind(argv[1]);
     }
 
+    // publish heartbeats
     int i = 0;
-    while (!token->cancelled()) {
-        std::string message(uuid_string);
-        message += " " + host_name + ": " + std::to_string(i++);
-        s1.send(message.c_str(), message.size() + 1, 0);
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+    try {
+        while (!token->cancelled()) {
+            std::string message(uuid_string);
+            message += " " + host_name + ": " + std::to_string(i++);
+            s1.send(message.c_str(), message.size() + 1, 0);
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+    }
+    catch (std::exception& e) {
+        std::cout << host_name << " aborted: " << e.what() << std::endl;
     }
 
     std::cout << uuid_string << " " << host_name << " (worker) -> stopped via kill socket" << std::endl;

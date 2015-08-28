@@ -8,13 +8,15 @@
 #include <sole.hpp>
 #include <string>
 
+
+
 int main(int argc, char* argv[]) {
     auto token = std::make_shared<nanomsg_cancellation_token>();
     token->wait_on_new_thread();
 
-    auto uuid = sole::uuid0();
-    auto uuid_string = uuid.base62();
+    auto uuid_string = sole::uuid0().base62();
 
+    // configure the subscriber socket
     nn::socket s2(AF_SP, NN_SUB);
 
     if (argc == 1) {
@@ -30,8 +32,8 @@ int main(int argc, char* argv[]) {
 
     s2.setsockopt(NN_SUB, NN_SUB_SUBSCRIBE, "", 0);
 
+    // receive heartbeats from all peers
     char buf[128];
-
     try {
         while (!token->cancelled()) {
             if (s2.recv(buf, sizeof(buf), 0) >= 0) {
